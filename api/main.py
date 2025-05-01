@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile
 import os
 from contextlib import asynccontextmanager
 from utils import get_driver, upload_csv_to_neo4j, query_neo4j
+import uvicorn
 
 
 @asynccontextmanager
@@ -45,3 +46,7 @@ async def query(from_station: str, to_station: str):
     if not result:
         return {"message": "No route found"}
     return {"message": "Route found", "data": result}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, log_level="info")
